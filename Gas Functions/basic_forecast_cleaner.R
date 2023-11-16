@@ -37,7 +37,7 @@ basic_forecast_cleaner <- function(directory, workbook){
            row %in% c(9:15) & col %in% c(1:8, 10:11)) |>
     mutate(value = case_when(
       col == 1 ~ character, 
-      TRUE ~ content
+      col!= 1 & data_type == "numeric" ~ content, 
     )) |> 
     select(row, col, value) |> 
     pivot_wider(names_from = col, values_from = value) |> 
@@ -69,7 +69,7 @@ basic_forecast_cleaner <- function(directory, workbook){
            row %in% c(23:29) & col %in% c(3:8, 10:13)) |> 
     mutate(value = case_when(
       col == 1 ~ character, 
-      TRUE ~ content
+      col!= 1 & data_type == "numeric" ~ content
     )) |> 
     select(row, col, value) |> 
     pivot_wider(names_from = col, values_from = value) |> 
@@ -83,4 +83,5 @@ basic_forecast_cleaner <- function(directory, workbook){
     bind_cols(second_table_values)
   
   return(basic_forecast)
+  
 }

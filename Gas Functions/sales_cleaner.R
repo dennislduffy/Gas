@@ -41,7 +41,8 @@ sales_cleaner <- function(directory, workbook){
       filter(row %in% c(11:13) & col %in% c(2:9)) |> 
       mutate(content = case_when(
         col == 2 ~ character, 
-        TRUE ~ content
+        col != 2 & data_type == "numeric" ~ content, 
+        TRUE ~ NA
       )) |> 
       select(row, col, content) |> 
       pivot_wider(names_from = col, values_from = content) |> 
@@ -85,7 +86,8 @@ sales_cleaner <- function(directory, workbook){
       filter(row %in% c(23:25) & col %in% c(1:8)) |>
       mutate(content = case_when(
         col == 1 ~ character, 
-        TRUE ~ content
+        col != 1 & data_type == "numeric" ~ content, 
+        TRUE ~ NA
       )) |> 
       select(row, col, content) |> 
       pivot_wider(names_from = col, values_from = content) |> 

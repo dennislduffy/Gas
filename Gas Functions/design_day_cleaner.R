@@ -36,10 +36,9 @@ design_day_cleaner <- function(directory, workbook){
   design_day_values <- raw_utility |> 
     filter(sheet == "DesignDay", 
            row %in% c(9:15) & col %in% c(1:6, 8)) |> 
-    select(row, col, content, character) |> 
     mutate(cell_value = case_when(
       col == 1 ~ character, 
-      TRUE ~ content
+      col != 1 & data_type == "numeric" ~ content
     )) |> 
     select(row, col, cell_value) |> 
     pivot_wider(values_from = cell_value, names_from = col) |> 

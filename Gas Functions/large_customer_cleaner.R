@@ -25,8 +25,9 @@ large_customer_cleaner <- function(directory, workbook){
     filter(sheet == "CommInd200MCF", 
            col %in% c(4:5) & row %in% c(8:10)) |>
     mutate(value = case_when(
-      data_type == "character" ~ character, 
-      TRUE ~ content
+      address %in% c("D9", "E9", "D10", "E10") & data_type == "numeric" ~ content, 
+      address %in% c("D8", "E8", "C9", "C10") ~ character, 
+      address %in% c("D9", "E9", "D10", "E10") & data_type == "character" ~ NA
     )) |> 
     select(row, col, value) |> 
     pivot_wider(names_from = "col", values_from = "value") |> 

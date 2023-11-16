@@ -35,7 +35,7 @@ curve_cleaner <- function(directory, workbook){
            col %in% c(1:8) & row %in% c(20:31)) |> 
     mutate(value = case_when(
       col == 1 ~ character, 
-      TRUE ~ content
+      col!= 1 & data_type == "numeric" ~ content
     )) |> 
     select(row, col, value) |> 
     pivot_wider(names_from = col, values_from = value) |> 

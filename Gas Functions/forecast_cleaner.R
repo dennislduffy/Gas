@@ -49,7 +49,7 @@ forecast_cleaner <- function(directory, workbook){
       filter(row %in% c(11:37) & col %in% c(1:9)) |> 
       mutate(content = case_when(
         col == 2 ~ character, 
-        TRUE ~ content
+        col != 2 & data_type == "numeric" ~ content
       )) |> 
       select(row, col, content) |> 
       pivot_wider(names_from = col, values_from = content) |> 

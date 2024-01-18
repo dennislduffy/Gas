@@ -32,7 +32,11 @@ county_cleaner <- function(directory, workbook){
            row %in% c(15:59) & col == 2 | row %in% c(15:56) & col == 6) |>
     arrange(col, row) |> 
     select(character) |> 
-    rename("county_name" = "character")
+    rename("county_name" = "character") |> 
+    mutate(county_name = case_when(
+      county_name == "Olmstead" ~ "Olmsted", 
+      TRUE ~ county_name
+    ))
   
   mcf_delivered <- raw_utility |> 
     filter(sheet == "GasByCounty", 
